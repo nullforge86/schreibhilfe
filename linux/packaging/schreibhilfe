@@ -1,0 +1,10 @@
+#!/bin/sh
+# Starter des Debian-Pakets: /usr/bin/schreibhilfe ist ein Link hierher.
+# Löst den Link auf und startet main.py mit dem Python des Systems — ein
+# aktives venv ohne PyGObject soll den Start nicht verhindern.
+set -eu
+HIER="$(dirname "$(readlink -f "$0")")"
+# /opt gehört root: keine __pycache__-Versuche dort.
+PYTHONDONTWRITEBYTECODE=1
+export PYTHONDONTWRITEBYTECODE
+exec /usr/bin/python3 "$HIER/../main.py" "$@"

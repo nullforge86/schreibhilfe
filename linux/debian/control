@@ -1,0 +1,27 @@
+Source: stevie-schreibhilfe
+Section: text
+Priority: optional
+Maintainer: Kay Siebke <258322733+kaysiebke-cell@users.noreply.github.com>
+Build-Depends: debhelper-compat (= 13), python3
+Standards-Version: 4.6.2
+Rules-Requires-Root: no
+Homepage: https://github.com/nullforge86/schreibhilfe
+Vcs-Browser: https://github.com/nullforge86/schreibhilfe
+
+Package: stevie-schreibhilfe
+Architecture: all
+Depends: ${misc:Depends}, python3, python3-gi, gir1.2-gtk-3.0
+Recommends: gir1.2-gtksource-3.0, speech-dispatcher
+Suggests: pulseaudio-utils | alsa-utils
+Conflicts: schreibhilfe
+Replaces: schreibhilfe
+Description: Rechtschreib- und Schreibhilfe für Linux (GTK 3)
+ Native GTK-3-Anwendung des Stevie-Empire-Ökosystems zum Prüfen und
+ Korrigieren deutscher Texte: Fundkarten mit Begründung, Wortvorschläge nach
+ dem Klang (Kölner Phonetik), Wortvorhersage und Vorlesen.
+ .
+ Die Prüfung läuft lokal. KI-Funktionen (Claude oder ein lokales
+ Ollama-Modell) sind optional und erst aktiv, wenn ein Schlüssel oder ein
+ Modell eingerichtet ist.
+ .
+ Installiert nach /opt/stevie-empire/schreibhilfe/, Aufruf: schreibhilfe.

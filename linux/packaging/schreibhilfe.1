@@ -1,0 +1,36 @@
+.TH SCHREIBHILFE 1 "Oktober 2026" "stevie-schreibhilfe 1.0.3" "Benutzerbefehle"
+.SH NAME
+schreibhilfe \- Rechtschreib- und Schreibhilfe (GTK 3)
+.SH ÜBERSICHT
+.B schreibhilfe
+.SH BESCHREIBUNG
+Öffnet das Fenster der Schreibhilfe: Text prüfen, Funde als Karten mit
+Begründung, Wortvorschläge nach dem Klang, Vorlesen. Läuft die Anwendung
+bereits, holt ein zweiter Aufruf das vorhandene Fenster nach vorn.
+.PP
+Die Prüfung läuft lokal. KI-Funktionen sind erst aktiv, wenn in den
+Einstellungen ein API-Schlüssel oder ein Ollama-Modell eingerichtet ist.
+.SH DATEIEN
+.TP
+.I /opt/stevie-empire/schreibhilfe/
+Programm, Wörterliste und Regeln (nur lesen).
+.TP
+.I ~/.config/schreibhilfe/einstellungen.json
+Schlüssel, Modell, gelernte Wörter (Rechte 600).
+.TP
+.I ~/.config/schreibhilfe/linux.json
+Schrift, Hell/Dunkel, Stimme.
+.TP
+.I ~/.local/share/schreibhilfe/
+Text im Feld, Fenstergröße, Piper-Stimmen.
+.PP
+Gesetzte Variablen
+.B XDG_CONFIG_HOME
+und
+.B XDG_DATA_HOME
+ersetzen
+.I ~/.config
+und
+.IR ~/.local/share .
+.SH SIEHE AUCH
+.BR spd-say (1)

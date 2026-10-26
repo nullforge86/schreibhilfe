@@ -6,7 +6,6 @@ schon, holt er das vorhandene Fenster nach vorn, statt ein zweites zu öffnen.
 Beim Beenden ist die Kennung wieder frei — der nächste Start kommt zuverlässig.
 """
 
-import os
 import sys
 
 import gi
@@ -51,18 +50,18 @@ class Schreibhilfe(Gtk.Application):
         kennt das Theme das Symbol „schreibhilfe“ nicht — dann aus dem Ordner."""
         theme = Gtk.IconTheme.get_default()
         if not theme.has_icon("schreibhilfe"):
-            theme.append_search_path(pfade.RESSOURCEN)
-        png = os.path.join(pfade.RESSOURCEN, "schreibhilfe.png")
-        if os.path.isfile(png):
+            theme.append_search_path(str(pfade.RESSOURCEN))
+        png = pfade.RESSOURCEN / "schreibhilfe.png"
+        if png.is_file():
             try:
-                Gtk.Window.set_default_icon_from_file(png)
+                Gtk.Window.set_default_icon_from_file(str(png))
             except GLib.Error:
                 pass
 
     def _css_laden(self):
         css = Gtk.CssProvider()
         try:
-            css.load_from_path(os.path.join(pfade.RESSOURCEN, "schreibhilfe.css"))
+            css.load_from_path(str(pfade.RESSOURCEN / "schreibhilfe.css"))
         except GLib.Error as fehler:
             print("Die Gestaltung fehlt (%s) — es geht ohne." % fehler.message, file=sys.stderr)
             return

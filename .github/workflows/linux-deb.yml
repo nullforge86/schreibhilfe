@@ -1,0 +1,70 @@
+name: Linux-App prüfen und Debian-Paket bauen
+
+# Prüft die native Linux-Fassung (linux/) und baut das Paket
+# stevie-schreibhilfe. Auf Ubuntu 24.04 — derselben Basis wie Linux Mint 22.
+# Das fertige .deb hängt am Lauf unter „Artefakte"; veröffentlicht wird nichts.
+
+on:
+  push:
+    branches: [ "**" ]
+    paths:
+      - "linux/**"
+      - "online/daten/**"
+      - ".github/workflows/linux-deb.yml"
+  pull_request:
+    paths:
+      - "linux/**"
+      - ".github/workflows/linux-deb.yml"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  deb:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Code auschecken
+        uses: actions/checkout@v4
+
+      - name: Werkzeuge und Laufzeit-Pakete
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends \
+            build-essential dpkg-dev debhelper lintian shellcheck desktop-file-utils xvfb \
+            python3-gi gir1.2-gtk-3.0 gir1.2-gtksource-3.0
+
+      - name: Skripte prüfen (bash -n, ShellCheck)
+        run: |
+          for s in linux/build-deb.sh linux/run-app.sh linux/packaging/schreibhilfe; do
+            bash -n "$s"
+          done
+          shellcheck linux/build-deb.sh linux/run-app.sh linux/packaging/schreibhilfe
+
+      - name: Desktop-Datei prüfen
+        run: desktop-file-validate linux/packaging/stevie-schreibhilfe.desktop
+
+      - name: Tests mit Oberfläche (Xvfb)
+        run: |
+          SCHREIBHILFE_GUI_TEST=1 GDK_BACKEND=x11 xvfb-run -a \
+            /usr/bin/python3 -m unittest discover -s linux/tests -t linux -v
+
+      - name: Paket bauen und mit lintian prüfen
+        run: ./linux/build-deb.sh --pruefen
+
+      - name: Installieren, starten, entfernen
+        run: |
+          sudo apt-get install -y ./linux/dist/stevie-schreibhilfe_*_all.deb
+          test "$(readlink -f /usr/bin/schreibhilfe)" = /opt/stevie-empire/schreibhilfe/bin/schreibhilfe
+          cd /tmp && GDK_BACKEND=x11 timeout 15 xvfb-run -a schreibhilfe || test $? -eq 124
+          test -d "$HOME/.config/schreibhilfe"
+          test -z "$(find /opt/stevie-empire -name __pycache__ -o -name benutzer)"
+          sudo apt-get remove -y stevie-schreibhilfe
+          test ! -e /usr/bin/schreibhilfe
+          test ! -e /opt/stevie-empire/schreibhilfe
+
+      - name: Paket aufheben
+        uses: actions/upload-artifact@v4
+        with:
+          name: stevie-schreibhilfe-deb
+          path: linux/dist/*.deb

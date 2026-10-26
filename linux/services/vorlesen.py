@@ -32,7 +32,7 @@ VORLESER = {"lauf": None, "rechner": None}
 # Projekts unter ~/.local/share/schreibhilfe/piper — 90 MB gehören nicht ins
 # Repo. Ist er da, spricht er; sonst bleibt es bei spd-say.
 PIPER_ORT = pfade.PIPER_ORT
-PIPER = os.path.join(PIPER_ORT, "piper", "piper")
+PIPER = PIPER_ORT / "piper" / "piper"
 
 # Wie die Dateinamen auf Deutsch heißen. Wer „de_DE-eva_k-x_low" liest, weiß
 # nicht, ob das eine Frau ist — und genau danach sucht man in einer Liste.
@@ -57,14 +57,12 @@ def piper_stimmen():
     wie fein das Modell rechnet. Wer die Liste aufklappt, soll oben das Beste
     finden und nicht die Reihenfolge des Alphabets.
     """
-    if not (os.path.isfile(PIPER) and os.access(PIPER, os.X_OK)):
+    if not (PIPER.is_file() and os.access(PIPER, os.X_OK)):
         return []
     stufe = {"high": 0, "medium": 1, "low": 2, "x_low": 3}
     gefunden = []
-    for datei in sorted(os.listdir(PIPER_ORT)):
-        if not datei.endswith(".onnx"):
-            continue
-        kennung = datei[:-len(".onnx")]
+    for datei in sorted(PIPER_ORT.glob("*.onnx")):
+        kennung = datei.stem
         gefunden.append((stufe.get(kennung.rsplit("-", 1)[-1], 9), kennung,
                          PIPER_NAMEN.get(kennung, kennung.replace("de_DE-", ""))))
     gefunden.sort(key=lambda e: (e[0], e[2]))
@@ -74,11 +72,11 @@ def piper_stimmen():
 def piper_stimme(kennung=""):
     """Die Stimmdatei zur Kennung — oder die erste beste."""
     if kennung:
-        pfad = os.path.join(PIPER_ORT, kennung + ".onnx")
-        if os.path.isfile(pfad):
-            return pfad
+        pfad = PIPER_ORT / (kennung + ".onnx")
+        if pfad.is_file():
+            return str(pfad)
     stimmen = piper_stimmen()
-    return os.path.join(PIPER_ORT, stimmen[0]["kennung"] + ".onnx") if stimmen else None
+    return str(PIPER_ORT / (stimmen[0]["kennung"] + ".onnx")) if stimmen else None
 
 
 def piper_da():
