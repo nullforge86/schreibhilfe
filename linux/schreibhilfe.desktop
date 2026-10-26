@@ -1,0 +1,15 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Schreibhilfe
+GenericName=Rechtschreibhilfe
+Comment=Text prüfen und korrigieren — native Linux-Fassung, ohne Browser
+Comment[en]=Spelling and grammar helper for people with dyslexia — native Linux app
+Exec="@HIER@/run-app.sh"
+Path=@HIER@
+Icon=schreibhilfe
+StartupWMClass=schreibhilfe
+Terminal=false
+Categories=Office;TextTools;GTK;
+Keywords=Rechtschreibung;Korrektur;Legasthenie;Schreiben;Ollama;
+StartupNotify=true

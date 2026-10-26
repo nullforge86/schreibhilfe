@@ -10,14 +10,14 @@ Categories:
   - Science & Education
 License: MIT
 AuthorName: Kay Siebke
-SourceCode: https://github.com/kaysiebke-cell/schreibhilfe
-IssueTracker: https://github.com/kaysiebke-cell/schreibhilfe/issues
-Changelog: https://github.com/kaysiebke-cell/schreibhilfe/releases
+SourceCode: https://github.com/nullforge86/schreibhilfe
+IssueTracker: https://github.com/nullforge86/schreibhilfe/issues
+Changelog: https://github.com/nullforge86/schreibhilfe/releases
 
 AutoName: Schreibhilfe
 
 RepoType: git
-Repo: https://github.com/kaysiebke-cell/schreibhilfe.git
+Repo: https://github.com/nullforge86/schreibhilfe.git
 
 Builds:
   - versionName: 1.0.1

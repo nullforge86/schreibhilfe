@@ -46,8 +46,8 @@ keine Ausweisprüfung.
 
    * Was die App macht (zwei Sätze — der kurze Text aus
      `fastlane/metadata/android/en-US/short_description.txt` reicht)
-   * Quelltext: <https://github.com/kaysiebke-cell/schreibhilfe>
-   * Releases: <https://github.com/kaysiebke-cell/schreibhilfe/releases>
+   * Quelltext: <https://github.com/nullforge86/schreibhilfe>
+   * Releases: <https://github.com/nullforge86/schreibhilfe/releases>
    * Lizenz: MIT
    * Hinweis, dass die Fastlane-Angaben samt Bildern im Verzeichnis liegen
 
@@ -88,7 +88,7 @@ Konto.
 GitHub-Releases installiert und aktualisiert — kein Laden, kein Konto,
 nirgends. Wer sie hat, fügt die Adresse
 
-    https://github.com/kaysiebke-cell/schreibhilfe
+    https://github.com/nullforge86/schreibhilfe
 
 ein und bekommt ab dann jedes Update von selbst.
 

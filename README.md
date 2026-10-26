@@ -4,7 +4,7 @@ Eine Schreibhilfe fürs Handy. Kein App Store, keine Anmeldung. Ohne den
 KI-Knopf verlässt kein Wort das Gerät.
 
 > **Im Browser ausprobieren, ohne alles:**
-> <https://kaysiebke-cell.github.io/schreibhilfe/>
+> <https://nullforge86.github.io/schreibhilfe/>
 
 <table>
 <tr>
@@ -21,7 +21,7 @@ KI-Knopf verlässt kein Wort das Gerät.
 
 ## ⬇️ Aufs Handy — die App herunterladen
 
-**➡️ [schreibhilfe.apk herunterladen](https://github.com/kaysiebke-cell/schreibhilfe/releases/latest/download/schreibhilfe.apk)**
+**➡️ [schreibhilfe.apk herunterladen](https://github.com/nullforge86/schreibhilfe/releases/latest/download/schreibhilfe.apk)**
 
 Den Link **im Handy-Browser** öffnen → Datei antippen → *„Aus dieser Quelle
 installieren"* erlauben → **Installieren**. Fertig.
@@ -31,7 +31,7 @@ speichern. Er zeigt immer auf die neueste; es gibt bewusst nur eine, damit
 man sich nicht in Fassungen verirrt. Ausführlich, samt Stolpersteinen: **[APK-HERUNTERLADEN.md](APK-HERUNTERLADEN.md)**
 
 **Ohne Installation** geht es auch im Browser:
-<https://kaysiebke-cell.github.io/schreibhilfe/>
+<https://nullforge86.github.io/schreibhilfe/>
 
 ## ✍️ Der schnelle Weg: gar nicht erst die App öffnen
 
@@ -394,7 +394,7 @@ praktisch gleichem Ergebnis. Die Schreibhilfe schaltet es deshalb ab.
 
 **Die Browser-Fassung aus dem Netz kommt nicht an Ollama heran.** Ollama
 antwortet nur Seiten, die es kennt, und das sind ab Werk nur die von
-`localhost`. Die Seite auf `kaysiebke-cell.github.io` wird abgewiesen (Fehler
+`localhost`. Die Seite auf `nullforge86.github.io` wird abgewiesen (Fehler
 403). Zwei Wege: die App am PC selbst ausliefern (`python3 -m http.server 8321`
 im Ordner `online/`, dann <http://localhost:8321>) — oder Ollama die
 GitHub-Adresse erlauben. In Writer stellt sich die Frage nicht: Die Erweiterung

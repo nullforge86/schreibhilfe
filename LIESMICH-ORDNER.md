@@ -21,7 +21,7 @@ Handy und PC-Browser benutzen dieselben Dateien. Nichts davon liegt doppelt.
     online/daten/regeln.js       der Wortschatz der Prüfung — die EINE Quelle
 
 Dieser Ordner — und nur dieser — wird im Netz veröffentlicht, unter
-https://kaysiebke-cell.github.io/schreibhilfe/ . Dafür sorgt
+https://nullforge86.github.io/schreibhilfe/ . Dafür sorgt
 `.github/workflows/seite.yml`. Was hier nicht drinliegt, ist im Netz nicht
 zu haben: Deshalb wohnt auch `daten/` mit hier drin.
 

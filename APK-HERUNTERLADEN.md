@@ -2,12 +2,12 @@
 
 ## ⬇️ Direkt herunterladen (immer die neueste Fassung)
 
-**➡️ [schreibhilfe.apk herunterladen](https://github.com/kaysiebke-cell/schreibhilfe/releases/latest/download/schreibhilfe.apk)**
+**➡️ [schreibhilfe.apk herunterladen](https://github.com/nullforge86/schreibhilfe/releases/latest/download/schreibhilfe.apk)**
 
 Diese Datei wird bei **jeder Änderung automatisch aktualisiert** — der Link bleibt
 aber immer derselbe. Am besten im Handy-Browser als **Lesezeichen** speichern.
 
-*(Falls der Link mal klemmt: [alle Fassungen ansehen](https://github.com/kaysiebke-cell/schreibhilfe/releases/latest) → unter „Assets" auf `schreibhilfe.apk`.)*
+*(Falls der Link mal klemmt: [alle Fassungen ansehen](https://github.com/nullforge86/schreibhilfe/releases/latest) → unter „Assets" auf `schreibhilfe.apk`.)*
 
 ## 📲 Installieren — 3 Schritte
 
@@ -66,4 +66,4 @@ installieren und benutzen, nur Updates darüber gehen dann nicht.
 
 ## Ohne Installation: im Browser
 
-Geht auch ohne APK: <https://kaysiebke-cell.github.io/schreibhilfe/>
+Geht auch ohne APK: <https://nullforge86.github.io/schreibhilfe/>

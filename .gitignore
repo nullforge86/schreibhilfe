@@ -20,3 +20,9 @@ android/keystore.properties
 # Die gepackte LibreOffice-Erweiterung entsteht beim Bauen neu.
 libreoffice/*.oxt
 libreoffice/schreibhilfe/woerter.txt
+
+# Linux: persönliche Einstellungen und lokale Texte
+linux/benutzer/
+
+# Gebaute Debian-Pakete nicht ins Quell-Repository
+*.deb

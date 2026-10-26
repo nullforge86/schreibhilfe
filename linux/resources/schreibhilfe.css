@@ -1,0 +1,24 @@
+/* Nur das, was das Cinnamon-Theme nicht selbst kennt: die Fundkarten und die
+   Wortleiste. Farben kommen aus dem Theme, wo es geht. */
+.fund {
+  border-left: 5px solid #9aa0a6;
+  border-radius: 4px;
+  padding: 8px 10px;
+  margin: 3px 0;
+  background-color: alpha(currentColor, 0.05);
+}
+.fund-fehler    { border-left-color: #e8710a; }
+.fund-tipp      { border-left-color: #d9a400; }
+.fund-hinweis   { border-left-color: #5b8def; }
+.fund-vorschlag { border-left-color: #1e8e3e; }
+.fund-sorte     { font-size: 80%; font-weight: bold; opacity: 0.75; }
+.fund-falsch    { text-decoration: line-through; opacity: 0.8; }
+.fund-richtig   { font-weight: bold; }
+.fund-grund     { font-size: 90%; opacity: 0.75; }
+.fund-satz-alt  { opacity: 0.8; }
+.fund-satz-neu  { font-weight: bold; }
+.wortleiste     { padding: 4px 6px; }
+.wortleiste-was { font-size: 85%; opacity: 0.75; }
+.status-gut     { color: #1e8e3e; font-weight: bold; }
+.kasten-titel   { font-weight: bold; }
+.schriftprobe   { padding: 6px 0; }
