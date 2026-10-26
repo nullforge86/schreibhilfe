@@ -4,22 +4,69 @@ Eine echte GTK-3-Anwendung. **Kein Browser, kein WebKit, kein Webserver.**
 Titelleiste und Rahmen zeichnet Cinnamon selbst (Muffin, dein Theme); darunter
 Menüleiste, Werkzeugleiste, Schreibfeld, Fundkarten und Statuszeile.
 
-## Installieren und starten
+## Voraussetzungen
+
+Linux Mint 22.x / Ubuntu 24.04 (Python 3.12). Laufzeit:
 
 ```bash
-sudo apt install python3-gi gir1.2-gtk-3.0 gir1.2-gtksource-3.0   # meist schon da
-./linux/install.sh
+sudo apt install python3-gi gir1.2-gtk-3.0          # Pflicht
+sudo apt install gir1.2-gtksource-3.0 speech-dispatcher   # empfohlen: Strg+Z im Feld, Vorlesen
 ```
 
-`install.sh` prüft die Voraussetzungen (und nennt das fehlende Paket), legt den
-Menüeintrag **Schreibhilfe** (Büro) und das Symbol im eigenen Benutzerordner an.
-Kein `sudo`, nichts im System, keine Cinnamon-Einstellung wird verändert.
-Danach genügt das Anwendungsmenü; ohne Menü: `./linux/run-app.sh`.
+## Als Debian-Paket installieren (empfohlen)
 
-* Ein zweiter Start holt das laufende Fenster nach vorn (Gtk.Application).
-* Verschiebst du den Projektordner, zieht der nächste Start von `run-app.sh`
-  den Menüeintrag selbst nach.
-* Entfernen: `./linux/install.sh --weg` (Texte und Einstellungen bleiben).
+```bash
+sudo apt install dpkg-dev debhelper lintian   # nur zum Bauen
+./linux/build-deb.sh                          # baut nach linux/dist/, installiert nichts
+./linux/build-deb.sh --pruefen                # dazu dpkg-deb --info/--contents und lintian
+sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.3_all.deb
+```
+
+`build-deb.sh` baut in einer Wegwerf-Kopie und lässt `linux/benutzer/`
+(Schlüssel, Text) außen vor. Beim Bauen laufen die Tests der Dienste mit
+(`DEB_BUILD_OPTIONS=nocheck` schaltet sie ab).
+
+| Was | Wo |
+|---|---|
+| Programm, Wörterliste, Regeln, Symbol (nur lesen) | `/opt/stevie-empire/schreibhilfe/` |
+| Starter | `/opt/stevie-empire/schreibhilfe/bin/schreibhilfe` |
+| Befehl im Terminal | `schreibhilfe` (`/usr/bin/schreibhilfe`, Link aus dem Paket) |
+| Menüeintrag | `/usr/share/applications/stevie-schreibhilfe.desktop` („Stevie Empire – Schreibhilfe“, Büro) |
+| Symbol | `/usr/share/icons/hicolor/{scalable,512x512}/apps/stevie-schreibhilfe.*` |
+| Handbuchseite | `man schreibhilfe` |
+| Einstellungen, Schlüssel, Gedächtnis | `~/.config/schreibhilfe/einstellungen.json` (Rechte 600) |
+| Schrift, Hell/Dunkel, Stimme | `~/.config/schreibhilfe/linux.json` |
+| Text im Feld, Fenstergröße, Piper-Stimmen | `~/.local/share/schreibhilfe/` |
+
+Gesetzte `XDG_CONFIG_HOME` / `XDG_DATA_HOME` gelten statt `~/.config` und
+`~/.local/share`. Installiert schreibt die App nie nach `/opt`. Die
+LibreOffice-Erweiterung liest dieselbe `~/.config/schreibhilfe/einstellungen.json`.
+
+Das Paket ersetzt das ältere Paket `schreibhilfe` (1.0.2, unter
+`/opt/schreibhilfe`); apt entfernt es beim Installieren. Wer zusätzlich
+`install.sh` benutzt hat, nimmt diesen Eintrag mit `./linux/install.sh --weg`
+zurück — sonst stehen zwei „Schreibhilfe“ im Menü.
+
+Entfernen:
+
+```bash
+sudo apt remove stevie-schreibhilfe   # Programm, Link, Menüeintrag, Symbol
+```
+
+Einstellungen und Texte in `~/.config/schreibhilfe` und
+`~/.local/share/schreibhilfe` bleiben erhalten, auch bei `apt purge`.
+
+## Ohne Paket aus dem Projektordner starten (Entwicklung)
+
+```bash
+./linux/install.sh        # prüft Voraussetzungen, legt Menüeintrag + Symbol in ~/.local/share an
+./linux/run-app.sh        # startet die App (erneuert dabei den Menüeintrag)
+python3 linux/main.py     # oder direkt, von jedem Arbeitsverzeichnis aus
+```
+
+`install.sh` braucht kein `sudo` und ändert keine Cinnamon-Einstellung.
+Entfernen: `./linux/install.sh --weg` (Texte und Einstellungen bleiben).
+Ein zweiter Start holt das laufende Fenster nach vorn (Gtk.Application).
 
 ## Bedienung
 
@@ -37,42 +84,42 @@ Danach genügt das Anwendungsmenü; ohne Menü: `./linux/run-app.sh`.
 Die KI-Knöpfe bleiben grau, bis ein API-Schlüssel hinterlegt ist **oder** ein
 Ollama-Modell gewählt wurde. Ohne KI-Knopf verlässt kein Wort den Rechner.
 
-## Wo was liegt — alles in diesem Ordner
+## Wo die Nutzerdaten liegen
 
-| Was | Ort |
-|---|---|
-| Programm | `linux/` (`main.py`, `window.py`, `ui/`, `services/`, `resources/`) |
-| Wörterliste und Regeln | `linux/daten/` (Kopie von `online/daten/`; ein Test warnt, wenn sie abweichen) |
-| Schlüssel, Modell, Gedächtnis, Kosten | `linux/benutzer/einstellungen.json` (Rechte 600) |
-| Schrift, Hell/Dunkel, Stimme | `linux/benutzer/linux.json` |
-| Text im Feld, Fenstergröße | `linux/benutzer/text.txt`, `fenster-gtk.json` |
+Entschieden wird an einer Stelle, `services/pfade.py`, aus der Lage des
+Programms (nie aus dem Arbeitsverzeichnis):
 
-`linux/benutzer/` steht in `.gitignore`: Der Schlüssel gelangt nie ins Repo.
-Beim ersten Start werden Einstellungen, Text und Fenstergröße aus den alten
-Orten (`~/.config/schreibhilfe`, `~/.local/share/schreibhilfe`) hierher
-**kopiert** — nie gelöscht. Piper-Stimmen (`./stimme-holen.sh`, ~90 MB) bleiben,
-wo sie schon liegen, oder kommen nach `linux/benutzer/piper`.
+* **Aus dem Projektordner** (Ordner gehört dir, oder `linux/benutzer/` gibt
+  es schon): alles in `linux/benutzer/` — `einstellungen.json`, `linux.json`,
+  `text.txt`, `fenster-gtk.json`. Der Ordner steht in `.gitignore`: Der
+  Schlüssel gelangt nie ins Repo. Beim ersten Start wird aus den alten Orten
+  (`~/.config/schreibhilfe`, `~/.local/share/schreibhilfe`) **kopiert**, nie
+  gelöscht.
+* **Installiert** (Programmordner gehört root): XDG, siehe Tabelle oben.
 
-Nur der Menüeintrag und das Symbol müssen außerhalb liegen
-(`~/.local/share/applications/`, `~/.local/share/icons/`), sonst findet Cinnamon
-sie nicht. `./linux/install.sh --weg` entfernt beide.
-
-Die LibreOffice-Erweiterung liest weiter `~/.config/schreibhilfe/`. Wer beide
-Programme teilen will, kopiert `einstellungen.json` in den jeweils anderen Ort.
+Piper-Stimmen (`./stimme-holen.sh`, ~90 MB) liegen unter
+`~/.local/share/schreibhilfe/piper` oder, im Projektordner, unter
+`linux/benutzer/piper`.
 
 ## Aufbau
 
 ```
 main.py               Einstiegspunkt (prüft GTK, startet application)
+run-app.sh            Start aus dem Projektordner
+install.sh            Menüeintrag im Benutzerordner (ohne Paket)
+build-deb.sh          baut das Debian-Paket
+debian/               Paketbeschreibung (debhelper)
+packaging/            Starter, Desktop-Datei, Handbuchseite fürs Paket
 application.py        Gtk.Application: Kennung, Programmname, CSS, Symbol
 window.py             Hauptfenster: Stapel aus Schreib- und Einstellungsansicht
 ui/editor.py          Schreibfeld (GtkSourceView): Wortstreifen, grüne Stellen, Strg+Z
 ui/funde.py           Fundkarten
 ui/ki_kasten.py       Für wen? / Zettel / KI-Knöpfe
 ui/einstellungen.py   Einstellungsansicht
+services/pfade.py     alle Pfade: Programm, Daten, Nutzerdaten (pathlib, XDG)
 services/pruefung.py  die Prüfung (Abschrift des Originals, Test hält sie gleich)
 daten/                Wörterliste und Regeln
-benutzer/             Einstellungen und Text (nicht im Repo)
+benutzer/             Einstellungen und Text beim Start aus dem Ordner (nicht im Repo)
 services/klang.py     Kölner Phonetik, Wortvorschläge
 services/ki.py        Anweisungen, Claude, Ollama, Kosten
 services/einstellungen.py  Einstellungen, Gedächtnis, Sicherungs-Text
@@ -92,6 +139,46 @@ SCHREIBHILFE_GUI_TEST=1 python3 -m unittest discover -s linux/tests -t linux   #
 
 Die Tests lenken `linux/benutzer` in einen Wegwerf-Ordner um. Der GUI-Test
 öffnet kurz ein echtes Fenster auf dem aktuellen Bildschirm.
+
+Ohne sichtbares Fenster (`sudo apt install xvfb`):
+
+```bash
+SCHREIBHILFE_GUI_TEST=1 GDK_BACKEND=x11 xvfb-run -a python3 -m unittest discover -s linux/tests -t linux
+```
+
+Skripte und Paket prüfen (`sudo apt install shellcheck desktop-file-utils lintian`):
+
+```bash
+shellcheck linux/build-deb.sh linux/run-app.sh linux/packaging/schreibhilfe
+desktop-file-validate linux/packaging/stevie-schreibhilfe.desktop
+./linux/build-deb.sh --pruefen
+```
+
+Dasselbe läuft auf GitHub in `.github/workflows/linux-deb.yml`, dort auch
+Installieren, Starten und Entfernen des Pakets.
+
+## Fehlerdiagnose
+
+| Meldung / Verhalten | Abhilfe |
+|---|---|
+| „Schreibhilfe braucht GTK 3 für Python“ | `sudo apt install python3-gi gir1.2-gtk-3.0` |
+| `python3 linux/main.py` scheitert an GTK, obwohl installiert | ein aktives venv ohne PyGObject — `deactivate` oder `/usr/bin/python3` nehmen; der Paket-Starter nutzt immer `/usr/bin/python3` |
+| Zwei „Schreibhilfe“ im Menü | `./linux/install.sh --weg` (Eintrag aus dem Projektordner entfernen) |
+| Vorlesen grau | `sudo apt install speech-dispatcher`, oder Piper mit `./stimme-holen.sh` |
+| KI-Knöpfe grau | Schlüssel oder Ollama-Modell in den Einstellungen eintragen |
+| `build-deb.sh`: „Es fehlt: …“ | `sudo apt install dpkg-dev debhelper python3` |
+
+Ausgaben der App sehen: `schreibhilfe` im Terminal starten.
+
+## Bekannte Einschränkungen
+
+* `/opt` ist nach Debian-Policy lokaler Software vorbehalten. Das Paket ist
+  für die eigene Installation gedacht, nicht fürs Debian-Archiv; lintian
+  meldet das (`dir-or-file-in-opt`) und ist dafür per Override still.
+* Getestet auf Ubuntu 24.04 (Container mit Xvfb); auf Linux Mint 22.3 selbst
+  noch nicht, und Wayland nicht (Cinnamon läuft unter X11).
+* Die Herkunft der Wörterliste `daten/woerter.txt` ist im Projekt nicht
+  dokumentiert (siehe `debian/copyright`).
 
 ## Was sich geändert hat (Webfenster-Problem)
 

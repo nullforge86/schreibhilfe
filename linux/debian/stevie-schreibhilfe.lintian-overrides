@@ -1,0 +1,5 @@
+# Bewusst: Das Stevie-Empire-Ökosystem installiert seine Programme nach
+# /opt/stevie-empire/<projekt>/. Das Paket ist für lokale Installation
+# gedacht, nicht für das Debian-Archiv (dort wäre /opt Systemverwaltern
+# vorbehalten).
+dir-or-file-in-opt *

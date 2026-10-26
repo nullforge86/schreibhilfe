@@ -2,13 +2,14 @@
 # -*- coding: utf-8 -*-
 """Einstiegspunkt der nativen Linux-Fassung (GTK 3, kein Browser, kein Server)."""
 
-import os
 import sys
+from pathlib import Path
 
-# Die Module liegen neben dieser Datei; der Aufruf soll von überall gehen.
-HIER = os.path.dirname(os.path.abspath(__file__))
-if HIER not in sys.path:
-    sys.path.insert(0, HIER)
+# Die Module liegen neben dieser Datei; der Aufruf soll von überall gehen —
+# auch über einen Symlink wie /usr/bin/schreibhilfe, deshalb resolve().
+HIER = Path(__file__).resolve().parent
+if str(HIER) not in sys.path:
+    sys.path.insert(0, str(HIER))
 
 
 def pruefe_umgebung():

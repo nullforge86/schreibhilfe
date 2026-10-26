@@ -1,0 +1,12 @@
+main.py                    opt/stevie-empire/schreibhilfe/
+application.py             opt/stevie-empire/schreibhilfe/
+window.py                  opt/stevie-empire/schreibhilfe/
+services/*.py              opt/stevie-empire/schreibhilfe/services/
+ui/*.py                    opt/stevie-empire/schreibhilfe/ui/
+daten/woerter.txt          opt/stevie-empire/schreibhilfe/daten/
+daten/regeln.js            opt/stevie-empire/schreibhilfe/daten/
+resources/schreibhilfe.css opt/stevie-empire/schreibhilfe/resources/
+resources/schreibhilfe.png opt/stevie-empire/schreibhilfe/resources/
+resources/schreibhilfe.svg opt/stevie-empire/schreibhilfe/resources/
+packaging/schreibhilfe     opt/stevie-empire/schreibhilfe/bin/
+packaging/stevie-schreibhilfe.desktop usr/share/applications/

@@ -34,15 +34,13 @@ Dieser Ordner ist von git ausgenommen; im Projekt liegt die App kein
 zweites Mal.
 
 ## Nur Linux
-    linux/schreibhilfe.py    Fenster (GTK) + WebKit + kleiner Server auf 127.0.0.1
-    linux/run-app.sh         startet die App und schreibt den Menüeintrag neu
+    linux/                   native GTK-3-App (Python), eigene README
+    linux/build-deb.sh       baut das Debian-Paket stevie-schreibhilfe
+    linux/debian/            Paketbeschreibung für debhelper
+    linux/run-app.sh         startet die App aus dem Ordner, schreibt den Menüeintrag neu
 
-Dasselbe Prinzip wie bei Android: ein Rahmen um `online/`, kein zweiter
-Nachbau. Die App wird nicht kopiert, sondern aus dem Ordner ausgeliefert.
-
-Der Umweg über einen Server statt `file://` hat einen Grund: Unter `file://`
-gilt die Seite nicht als sicherer Ursprung, und dann gibt es weder
-`localStorage` noch den Dienstarbeiter. `http://localhost` gilt als sicher.
+Kein Browser, kein Server. Wörterliste und Regeln liegen als Kopie in
+`linux/daten/`; ein Test meldet, wenn sie von `online/daten/` abweichen.
 
 ## Nur LibreOffice
     libreoffice/schreibhilfe/schreibhilfe.py   Menü, Fenster, KI

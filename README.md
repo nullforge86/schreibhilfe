@@ -294,45 +294,30 @@ ist, kann nichts über den geladenen Betrag hinaus anfallen — mehr Kontrolle
 als jedes Abo. Ein Claude-Pro-Abo hilft hier übrigens **nicht**: Das gilt für
 die Claude-App, nicht für den API-Zugang.
 
-## 🖥️ Am PC: die App als eigenes Fenster
+## 🖥️ Am PC: die native Linux-App
 
-Am Handy steckt die Web-App in einem Android-Rahmen. Für den PC gibt es
-denselben Rahmen unter Linux — ein Fenster, dieselben Dateien aus `online/`,
-kein zweiter Nachbau:
+Für Linux Mint / Ubuntu gibt es eine eigene GTK-3-Anwendung unter `linux/`:
+kein Browser, kein WebKit, kein Webserver. Sie prüft mit derselben Wörterliste
+und denselben Regeln wie die Web-App.
 
-```bash
-./linux/run-app.sh
-```
-
-Das startet die App **und** legt den Menüeintrag „Schreibhilfe" an. Der
-Eintrag wird bei jedem Start frisch geschrieben: Eine `.desktop`-Datei braucht
-feste Pfade, und Pfade ändern sich. Verschiebt man den Ordner, genügt ein
-Start von hier, dann stimmt der Eintrag wieder. Das Symbol wandert dabei in
-den festen Symbol-Ordner des Systems und wird nur beim Namen gerufen — ein
-Symbol, das über den Projektpfad gesucht wird, verschwindet beim ersten
-Verschieben.
-
-`--nur-eintrag` legt nur die Verknüpfung an, `--weg` nimmt sie zurück.
-
-Derselbe Aufbau wie beim Schwesterprojekt Aktenlage, wo er sich bewährt hat.
-
-Gebraucht wird nur, was Ubuntu ohnehin mitbringt:
+Als Debian-Paket (empfohlen, Installation nach `/opt/stevie-empire/schreibhilfe/`):
 
 ```bash
-sudo apt install python3-gi gir1.2-webkit2-4.1
+./linux/build-deb.sh
+sudo apt install ./linux/dist/stevie-schreibhilfe_*_all.deb
 ```
 
-Warum nicht einfach ein Browserfenster auf die veröffentlichte Seite?
+Danach startet sie über das Anwendungsmenü oder mit `schreibhilfe` im Terminal.
 
-* **Ollama.** Chrome lässt eine Seite, die aus dem Internet kommt, nicht an
-  einen Dienst auf dem eigenen Rechner heran — die Modelle blieben dort
-  ungrau. Hier kommt die Seite von `127.0.0.1`, und die Sperre entfällt.
-* **Es zeigt den eigenen Ordner**, nicht den zuletzt veröffentlichten Stand.
-* **Eigener Speicher** in `~/.local/share/schreibhilfe`, unabhängig davon,
-  welchen Browser man gerade benutzt.
+Direkt aus dem Projektordner, ohne Paket:
 
-Der kleine Webserver hört ausschließlich auf `127.0.0.1` und endet mit dem
-Fenster. Von außen ist nichts zu erreichen.
+```bash
+./linux/install.sh     # prüft die Voraussetzungen, legt den Menüeintrag an
+./linux/run-app.sh     # startet die App
+```
+
+Alles Weitere — Pfade, Nutzerdaten, Tests, Deinstallation — steht in
+[`linux/README.md`](linux/README.md).
 
 Wer von einem Browserfenster herüberwechselt, fängt mit leerem Gedächtnis an —
 Zahnrad ➜ *Gedächtnis* ➜ **Sichern** im alten, **Einspielen** im neuen.
@@ -437,10 +422,9 @@ online/icon.svg               App-Symbol (Quelle)
 online/icon-maskable.svg      dasselbe Motiv mit Rand — Android schneidet rund zu
 online/icon-*.png             daraus erzeugt, für den Startbildschirm im Browser
 
-linux/schreibhilfe.py         Fenster + kleiner Server für den PC; liefert
-                              dieselben Dateien und das Vorlesen — über Piper,
-                              sonst über spd-say
-linux/run-app.sh              startet es und schreibt den Menüeintrag
+linux/                        native GTK-3-App für den PC (eigene README);
+                              Vorlesen über Piper, sonst über spd-say
+linux/build-deb.sh            baut das Debian-Paket stevie-schreibhilfe
 stimme-holen.sh               holt Piper und die Stimme „Thorsten" (freiwillig,
                               landet außerhalb des Repos unter ~/.local/share)
 android/                      Rahmen für die APK (WebView um dieselbe Web-App)
@@ -497,15 +481,7 @@ Eine Installation aus der Zeit davor meldet ihn beim ersten Start selbst ab.
 
 ### Am PC ausprobieren
 
-```bash
-./linux/run-app.sh
-```
-
-Das ist der Weg, der alles zeigt: eigenes Fenster, eigener Speicher, Ollama
-erreichbar — und das Vorlesen, das nur über diesen Server geht. WebKit bringt
-im Gegensatz zum Browser keine Stimme mit; ohne den Server bliebe der Knopf weg.
-
-Nur die Seite, ohne Fenster und ohne Vorlesen:
+Die Web-App im Browser:
 
 ```bash
 cd online && python3 -m http.server 8321

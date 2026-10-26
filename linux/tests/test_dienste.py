@@ -6,9 +6,11 @@
 import ast
 import json
 import os
+import subprocess
 import sys
 import tempfile
 import unittest
+from pathlib import Path
 
 HIER = os.path.dirname(os.path.abspath(__file__))
 LINUX = os.path.dirname(HIER)
@@ -249,9 +251,40 @@ class TestEinstellungen(unittest.TestCase):
 class TestPfade(unittest.TestCase):
     def test_alles_im_linux_ordner(self):
         for ziel in (pfade.DATEN_QUELLE, pfade.RESSOURCEN):
-            self.assertTrue(ziel.startswith(LINUX), ziel)
+            self.assertTrue(str(ziel).startswith(os.path.realpath(LINUX)), ziel)
+            self.assertTrue(ziel.is_dir(), ziel)
         # unter den Tests: der Wegwerf-Ordner, sonst linux/benutzer
-        self.assertTrue(pfade.TEXT_DATEI.startswith(os.environ["SCHREIBHILFE_BENUTZER"]))
+        self.assertTrue(str(pfade.TEXT_DATEI).startswith(os.environ["SCHREIBHILFE_BENUTZER"]))
+
+    def test_orte_aus_dem_arbeitsbaum(self):
+        with tempfile.TemporaryDirectory() as t:
+            hier = Path(t) / "linux"
+            (hier / "benutzer").mkdir(parents=True)
+            konfig, daten, umgelenkt = pfade.waehle_orte(hier, {})
+            self.assertEqual((konfig, daten, umgelenkt), (hier / "benutzer", hier / "benutzer", False))
+
+    def test_orte_installiert_nach_xdg(self):
+        """Gehört der Programmordner root (wie unter /opt), nie hineinschreiben."""
+        hier = Path("/usr/lib")                       # gehört root, liegt überall
+        umgebung = {"XDG_CONFIG_HOME": "/k", "XDG_DATA_HOME": "/d"}
+        konfig, daten, _ = pfade.waehle_orte(hier, umgebung)
+        self.assertEqual(konfig, Path("/k/schreibhilfe"))
+        self.assertEqual(daten, Path("/d/schreibhilfe"))
+        # relative XDG-Werte zählen nach Spezifikation nicht
+        konfig, daten, _ = pfade.waehle_orte(hier, {"XDG_CONFIG_HOME": "rel"})
+        self.assertEqual(konfig, Path.home() / ".config" / "schreibhilfe")
+        self.assertEqual(daten, Path.home() / ".local/share" / "schreibhilfe")
+
+    def test_start_ueber_symlink_aus_fremdem_ordner(self):
+        """main.py findet seine Module auch über einen Link und von woanders aus."""
+        with tempfile.TemporaryDirectory() as t:
+            link = Path(t) / "schreibhilfe"
+            link.symlink_to(Path(LINUX) / "main.py")
+            ausgabe = subprocess.run(
+                [sys.executable, "-c",
+                 "import runpy, sys; m = runpy.run_path(sys.argv[1]); print(m['HIER'])", str(link)],
+                cwd=t, capture_output=True, text=True, check=True).stdout.strip()
+            self.assertEqual(ausgabe, os.path.realpath(LINUX))
 
     def test_alte_daten_werden_nur_kopiert(self):
         # Unter den Tests ist die Übernahme aus den echten Ordnern abgeschaltet.

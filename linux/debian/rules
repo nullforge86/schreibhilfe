@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+# Reine Python-Anwendung ohne Build-System: nichts zu kompilieren, die Dateien
+# legt dh_install nach debian/install ab, den Befehl dh_link nach debian/links.
+
+ZIEL := debian/stevie-schreibhilfe
+
+%:
+	dh $@
+
+# Die Tests der Dienste laufen ohne Fenster und ohne Netz.
+override_dh_auto_test:
+ifeq (,$(filter nocheck,$(DEB_BUILD_OPTIONS)))
+	PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -t .
+endif
+
+# Symbole unter dem Paketnamen, damit sie nicht mit einem Symbol aus
+# ./install.sh (~/.local/share/icons/…/schreibhilfe.*) zusammenfallen.
+execute_after_dh_install:
+	install -D -m 0644 resources/schreibhilfe.svg \
+		$(ZIEL)/usr/share/icons/hicolor/scalable/apps/stevie-schreibhilfe.svg
+	install -D -m 0644 resources/schreibhilfe.png \
+		$(ZIEL)/usr/share/icons/hicolor/512x512/apps/stevie-schreibhilfe.png

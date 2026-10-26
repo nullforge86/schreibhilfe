@@ -23,6 +23,7 @@ libreoffice/schreibhilfe/woerter.txt
 
 # Linux: persönliche Einstellungen und lokale Texte
 linux/benutzer/
+linux/dist/
 
 # Gebaute Debian-Pakete nicht ins Quell-Repository
 *.deb
