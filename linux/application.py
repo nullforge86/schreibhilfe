@@ -46,11 +46,17 @@ class Schreibhilfe(Gtk.Application):
         self.fenster.present()
 
     def _symbole_einrichten(self):
-        """Läuft die App aus dem Projektordner und ist noch nicht installiert,
-        kennt das Theme das Symbol „schreibhilfe“ nicht — dann aus dem Ordner."""
+        """Das Fenstersymbol kommt bevorzugt beim Namen aus dem Theme — dann
+        hat Cinnamon jede Größe scharf (Leiste, Alt+Tab). Das Debian-Paket
+        liefert „stevie-schreibhilfe“, install.sh „schreibhilfe“. Läuft die
+        App aus dem Projektordner und ist noch nicht eingerichtet, kennt das
+        Theme keins von beiden — dann aus dem Ordner."""
         theme = Gtk.IconTheme.get_default()
-        if not theme.has_icon("schreibhilfe"):
-            theme.append_search_path(str(pfade.RESSOURCEN))
+        for name in ("stevie-schreibhilfe", "schreibhilfe"):
+            if theme.has_icon(name):
+                Gtk.Window.set_default_icon_name(name)
+                return
+        theme.append_search_path(str(pfade.RESSOURCEN))
         png = pfade.RESSOURCEN / "schreibhilfe.png"
         if png.is_file():
             try:

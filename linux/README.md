@@ -16,7 +16,7 @@ sudo apt install gir1.2-gtksource-3.0 speech-dispatcher   # empfohlen: Strg+Z im
 ## Als Debian-Paket installieren (empfohlen)
 
 ```bash
-sudo apt install build-essential dpkg-dev debhelper lintian   # nur zum Bauen
+sudo apt install build-essential dpkg-dev debhelper librsvg2-bin lintian   # nur zum Bauen
 ./linux/build-deb.sh                          # baut nach linux/dist/, installiert nichts
 ./linux/build-deb.sh --pruefen                # dazu dpkg-deb --info/--contents und lintian
 sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.4_all.deb
@@ -32,7 +32,7 @@ sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.4_all.deb
 | Starter | `/opt/stevie-empire/schreibhilfe/bin/schreibhilfe` |
 | Befehl im Terminal | `schreibhilfe` (`/usr/bin/schreibhilfe`, Link aus dem Paket) |
 | Menüeintrag | `/usr/share/applications/stevie-schreibhilfe.desktop` („Schreibhilfe“, Büro) |
-| Symbol | `/usr/share/icons/hicolor/{scalable,512x512}/apps/stevie-schreibhilfe.*` |
+| Symbol | `/usr/share/icons/hicolor/{scalable,16x16 … 512x512}/apps/stevie-schreibhilfe.*` |
 | Handbuchseite | `man schreibhilfe` |
 | Einstellungen, Schlüssel, Gedächtnis | `~/.config/schreibhilfe/einstellungen.json` (Rechte 600) |
 | Schrift, Hell/Dunkel, Stimme | `~/.config/schreibhilfe/linux.json` |
@@ -166,7 +166,7 @@ Installieren, Starten und Entfernen des Pakets.
 | Zwei „Schreibhilfe“ im Menü | `./linux/install.sh --weg` (Eintrag aus dem Projektordner entfernen) |
 | Vorlesen grau | `sudo apt install speech-dispatcher`, oder Piper mit `./stimme-holen.sh` |
 | KI-Knöpfe grau | Schlüssel oder Ollama-Modell in den Einstellungen eintragen |
-| `build-deb.sh`: „Es fehlt: …“ | `sudo apt install build-essential dpkg-dev debhelper python3` |
+| `build-deb.sh`: „Es fehlt: …“ | `sudo apt install build-essential dpkg-dev debhelper librsvg2-bin python3` |
 
 Ausgaben der App sehen: `schreibhilfe` im Terminal starten.
 

@@ -15,8 +15,18 @@ endif
 
 # Symbole unter dem Paketnamen, damit sie nicht mit einem Symbol aus
 # ./install.sh (~/.local/share/icons/…/schreibhilfe.*) zusammenfallen.
+# Neben der SVG die festen Größen als PNG, aus derselben SVG gerechnet: Menü,
+# Leiste und Alt+Tab fragen nach 16 bis 256 Pixeln, und nicht jeder Weg
+# dorthin rechnet SVG selbst um.
+GROESSEN := 16 22 24 32 48 64 128 256
+
 execute_after_dh_install:
 	install -D -m 0644 resources/schreibhilfe.svg \
 		$(ZIEL)/usr/share/icons/hicolor/scalable/apps/stevie-schreibhilfe.svg
 	install -D -m 0644 resources/schreibhilfe.png \
 		$(ZIEL)/usr/share/icons/hicolor/512x512/apps/stevie-schreibhilfe.png
+	set -e; for g in $(GROESSEN); do \
+		mkdir -p $(ZIEL)/usr/share/icons/hicolor/$${g}x$${g}/apps; \
+		rsvg-convert -w $$g -h $$g resources/schreibhilfe.svg \
+			-o $(ZIEL)/usr/share/icons/hicolor/$${g}x$${g}/apps/stevie-schreibhilfe.png; \
+	done
