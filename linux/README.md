@@ -177,8 +177,6 @@ Ausgaben der App sehen: `schreibhilfe` im Terminal starten.
   meldet das (`dir-or-file-in-opt`) und ist dafür per Override still.
 * Getestet auf Ubuntu 24.04 (Container mit Xvfb); auf Linux Mint 22.3 selbst
   noch nicht, und Wayland nicht (Cinnamon läuft unter X11).
-* Die Herkunft der Wörterliste `daten/woerter.txt` ist im Projekt nicht
-  dokumentiert (siehe `debian/copyright`).
 
 ## Was sich geändert hat (Webfenster-Problem)
 

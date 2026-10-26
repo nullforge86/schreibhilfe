@@ -5,8 +5,9 @@ Source: https://github.com/nullforge86/schreibhilfe
 Files: *
 Copyright: 2026 Kay Siebke
 License: Expat
-Comment: Die Herkunft der Wörterliste daten/woerter.txt ist im Projekt nicht
- dokumentiert; sie steht hier unter der Lizenz des Projekts (LICENSE).
+Comment: Die Wörterliste daten/woerter.txt hat Kay Siebke im Projekt selbst
+ zusammengestellt (mit Hilfe von Claude); sie steht unter der Lizenz des
+ Projekts (LICENSE).
 
 License: Expat
  Permission is hereby granted, free of charge, to any person obtaining a copy
