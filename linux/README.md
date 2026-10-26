@@ -19,7 +19,7 @@ sudo apt install gir1.2-gtksource-3.0 speech-dispatcher   # empfohlen: Strg+Z im
 sudo apt install build-essential dpkg-dev debhelper lintian   # nur zum Bauen
 ./linux/build-deb.sh                          # baut nach linux/dist/, installiert nichts
 ./linux/build-deb.sh --pruefen                # dazu dpkg-deb --info/--contents und lintian
-sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.3_all.deb
+sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.4_all.deb
 ```
 
 `build-deb.sh` baut in einer Wegwerf-Kopie und lässt `linux/benutzer/`
@@ -31,7 +31,7 @@ sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.3_all.deb
 | Programm, Wörterliste, Regeln, Symbol (nur lesen) | `/opt/stevie-empire/schreibhilfe/` |
 | Starter | `/opt/stevie-empire/schreibhilfe/bin/schreibhilfe` |
 | Befehl im Terminal | `schreibhilfe` (`/usr/bin/schreibhilfe`, Link aus dem Paket) |
-| Menüeintrag | `/usr/share/applications/stevie-schreibhilfe.desktop` („Stevie Empire – Schreibhilfe“, Büro) |
+| Menüeintrag | `/usr/share/applications/stevie-schreibhilfe.desktop` („Schreibhilfe“, Büro) |
 | Symbol | `/usr/share/icons/hicolor/{scalable,512x512}/apps/stevie-schreibhilfe.*` |
 | Handbuchseite | `man schreibhilfe` |
 | Einstellungen, Schlüssel, Gedächtnis | `~/.config/schreibhilfe/einstellungen.json` (Rechte 600) |
