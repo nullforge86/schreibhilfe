@@ -9,21 +9,21 @@
 # Aufruf:  ./linux/build-deb.sh            Paket nach linux/dist/
 #          ./linux/build-deb.sh --pruefen   danach lintian und Dateiliste
 #
-# Braucht: build-essential, dpkg-dev, debhelper, python3 (für die Tests beim Bauen)
+# Braucht: build-essential, dpkg-dev, debhelper, librsvg2-bin, python3 (für die Tests beim Bauen)
 #          und für --pruefen: lintian
-#   sudo apt install build-essential dpkg-dev debhelper lintian
+#   sudo apt install build-essential dpkg-dev debhelper librsvg2-bin lintian
 
 set -Eeuo pipefail
 HIER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"     # …/linux
 AUSGABE="$HIER/dist"
 
 fehlt=()
-for werkzeug in dpkg-buildpackage dh python3 make; do
+for werkzeug in dpkg-buildpackage dh python3 make rsvg-convert; do
   command -v "$werkzeug" >/dev/null 2>&1 || fehlt+=("$werkzeug")
 done
 if [ "${#fehlt[@]}" -gt 0 ]; then
   echo "Es fehlt: ${fehlt[*]}" >&2
-  echo "Bitte installieren:  sudo apt install build-essential dpkg-dev debhelper python3" >&2
+  echo "Bitte installieren:  sudo apt install build-essential dpkg-dev debhelper python3 librsvg2-bin" >&2
   exit 1
 fi
 

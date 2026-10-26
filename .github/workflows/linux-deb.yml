@@ -31,7 +31,7 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq --no-install-recommends \
-            build-essential dpkg-dev debhelper lintian shellcheck desktop-file-utils xvfb \
+            build-essential dpkg-dev debhelper librsvg2-bin lintian shellcheck desktop-file-utils xvfb \
             python3-gi gir1.2-gtk-3.0 gir1.2-gtksource-3.0
 
       - name: Skripte prüfen (bash -n, ShellCheck)
