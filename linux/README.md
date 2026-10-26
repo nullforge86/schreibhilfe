@@ -16,7 +16,7 @@ sudo apt install gir1.2-gtksource-3.0 speech-dispatcher   # empfohlen: Strg+Z im
 ## Als Debian-Paket installieren (empfohlen)
 
 ```bash
-sudo apt install dpkg-dev debhelper lintian   # nur zum Bauen
+sudo apt install build-essential dpkg-dev debhelper lintian   # nur zum Bauen
 ./linux/build-deb.sh                          # baut nach linux/dist/, installiert nichts
 ./linux/build-deb.sh --pruefen                # dazu dpkg-deb --info/--contents und lintian
 sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.3_all.deb
@@ -166,7 +166,7 @@ Installieren, Starten und Entfernen des Pakets.
 | Zwei „Schreibhilfe“ im Menü | `./linux/install.sh --weg` (Eintrag aus dem Projektordner entfernen) |
 | Vorlesen grau | `sudo apt install speech-dispatcher`, oder Piper mit `./stimme-holen.sh` |
 | KI-Knöpfe grau | Schlüssel oder Ollama-Modell in den Einstellungen eintragen |
-| `build-deb.sh`: „Es fehlt: …“ | `sudo apt install dpkg-dev debhelper python3` |
+| `build-deb.sh`: „Es fehlt: …“ | `sudo apt install build-essential dpkg-dev debhelper python3` |
 
 Ausgaben der App sehen: `schreibhilfe` im Terminal starten.
 
