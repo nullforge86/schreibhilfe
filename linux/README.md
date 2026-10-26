@@ -19,7 +19,7 @@ sudo apt install gir1.2-gtksource-3.0 speech-dispatcher   # empfohlen: Strg+Z im
 sudo apt install build-essential dpkg-dev debhelper librsvg2-bin lintian   # nur zum Bauen
 ./linux/build-deb.sh                          # baut nach linux/dist/, installiert nichts
 ./linux/build-deb.sh --pruefen                # dazu dpkg-deb --info/--contents und lintian
-sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.4_all.deb
+sudo apt install ./linux/dist/stevie-schreibhilfe_1.0.5_all.deb
 ```
 
 `build-deb.sh` baut in einer Wegwerf-Kopie und lässt `linux/benutzer/`

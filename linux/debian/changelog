@@ -1,8 +1,13 @@
+stevie-schreibhilfe (1.0.5) unstable; urgency=medium
+
+  * Symbol zusätzlich in 16 bis 256 Pixeln; das Fenster nimmt es beim
+    Namen aus dem Theme.
+
+ -- Kay Siebke <258322733+kaysiebke-cell@users.noreply.github.com>  Mon, 26 Oct 2026 16:35:00 +0100
+
 stevie-schreibhilfe (1.0.4) unstable; urgency=medium
 
   * Menüeintrag heißt wieder schlicht „Schreibhilfe“.
-  * Symbol zusätzlich in 16 bis 256 Pixeln; das Fenster nimmt es beim
-    Namen aus dem Theme.
 
  -- Kay Siebke <258322733+kaysiebke-cell@users.noreply.github.com>  Mon, 26 Oct 2026 16:25:00 +0100
 
